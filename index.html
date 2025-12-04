@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Interner Bekleidungs-Shop</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        margin: 40px auto;
+        max-width: 1200px;
+        line-height: 1.6;
+    }
+    h1{text-align:center; margin-bottom:10px;}
+    .sub{ text-align:center; margin-bottom:30px; color:#444; }
+
+    table{ width:100%; border-collapse:collapse; margin-bottom:35px;}
+    th,td{border:1px solid #ccc;padding:7px;text-align:center;}
+    th{background:#f2f2f2;font-weight:bold;}
+    input[type=number]{width:55px;}
+
+    .block{margin-top:40px;}
+    button{
+        background:#0073ff;color:#fff;padding:15px 25px;font-size:18px;
+        border:none;border-radius:6px;cursor:pointer;margin-top:15px;
+    }
+    button:hover{background:#005dda;}
+
+    .banner-box{
+        display:flex;gap:30px;justify-content:center;margin-top:40px;
+    }
+    .banner-box img{
+        width:260px;border:1px solid #ccc;border-radius:6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Interner Bekleidungs-Shop</h1>
+<p class="sub">Mitarbeiter können hier Arbeitskleidung auswählen & bestellen.<br>
+Je Größe bitte Menge eintragen (0 = keine Bestellung).</p>
+
+<!-- 🔻 Bilderbereich oben (Logo) -->
+<div style="text-align:center;margin-bottom:30px;">
+    <img src="logo_schwarz.png" style="height:90px;">
+</div>
+
+<script>
+// Standorte
+const standorte = [
+ "Berlin - Großbeerenstr.","Berlin - Holzhauser Ford","Berlin - Holzhauser Opel",
+ "Berlin – Kurfürstendamm","Berlin - Lichtenberg","Berlin - Marzahn","Berlin - Nordring",
+ "Berlin - Pankow","Berlin - Spandau","Berlin - Wilmersdorf",
+ "Leipzig - Delitzscher Landstr.","Markkleeberg - Suzuki","Markkleeberg - Wachau",
+ "Oranienb. - Berliner Str.","Oranienb. - Saarlandstr.","Oranienb. - Sachsenhausener",
+ "Potsdam","Pritzwalk","Wittenberge","Wittstock","Zehdenick"
+];
+
+// Vorgesetzte
+const chefs=[
+ "Herr U. Dinnebier","Herr M. Dinnebier","Herr Engelmann",
+ "Herr Müller","Herr Pilniok","Herr Schoke","Herr Wünsch"
+];
+
+// Artikel + Größen
+const artikel=[
+"T-Shirt","Hemd Kurzarm","Hemd Langarm","Polo Langarm","Polo Kurzarm","Hoodie",
+"Langarmshirt","Softshelljacke","Winterjacke","Fleecejacke",
+"Bluse Kurzarm","Bluse Langarm","Arbeitsjacke (Jeans)","Kapuzensteppjacke"
+];
+
+const groessen=["XS","S","M","L","XL","XXL","3XL","4XL"];
+const farben=["Schwarz","Weiß"];
+</script>
+
+<h3>Mitarbeiterdaten</h3>
+<label>Name: <input type="text" id="name" required></label><br><br>
+<label>E-Mail: <input type="email" id="email" required></label><br><br>
+
+<label>Standort:
+<select id="standort">
+<script>standorte.forEach(s=>document.write(`<option>${s}</option>`));</script>
+</select>
+</label><br><br>
+
+<label>Vorgesetzter:
+<select id="chef">
+<script>chefs.forEach(c=>document.write(`<option>${c}</option>`));</script>
+</select>
+</label><br><br>
+
+<hr><br>
+<div id="shop"></div>
+
+<script>
+// Tabellen generieren
+let html="";
+farben.forEach(farbe=>{
+  html+=`<div class="block"><h2>${farbe}</h2><table><tr><th>Artikel</th>`;
+  groessen.forEach(g=>html+=`<th>${g}</th>`); html+="</tr>";
+
+  artikel.forEach(a=>{
+    html+=`<tr><td>${a}</td>`;
+    groessen.forEach(g=>{
+      html+=`<td><input type="number" min="0" value="0" name="${farbe}_${a}_${g}"></td>`;
+    });
+    html+="</tr>";
+  });
+
+  html+="</table></div>";
+});
+document.getElementById("shop").innerHTML=html;
+</script>
+
+<button onclick="absenden()">🛒 Bestellung absenden</button>
+
+<script>
+function absenden(){
+   let name=document.getElementById("name").value.trim();
+   let email=document.getElementById("email").value.trim();
+   if(!name||!email) return alert("Bitte Name & E-Mail eingeben!");
+
+   let stand=document.getElementById("standort").value;
+   let chef=document.getElementById("chef").value;
+
+   let bestell=[];
+   document.querySelectorAll("input[type=number]").forEach(el=>{
+      if(el.value>0) bestell.push(`${el.name}: ${el.value}`);
+   });
+   if(bestell.length===0) return alert("Keine Artikel ausgewählt!");
+
+   let empfaenger="marketing@dinnebiergruppe.de";
+
+   let text=
+`Neue Bekleidungsbestellung:
+
+Name: ${name}
+E-Mail: ${email}
+Standort: ${stand}
+Vorgesetzter: ${chef}
+
+Bestellung:
+${bestell.join("\n")}
+`;
+
+   // Mail an dich UND an Besteller
+   window.location.href=
+     `mailto:${empfaenger},${email}?subject=Bekleidungsbestellung%20${encodeURIComponent(name)}&body=${encodeURIComponent(text)}`;
+
+   alert("✔ Bestellung erstellt – Outlook öffnet sich.");
+}
+</script>
+
+<br><hr><br>
+
+<!-- 🔻 Bilder unter dem Button -->
+<h3 style="text-align:center;">Referenzen / Größenübersicht (Optional Download)</h3>
+<div class="banner-box">
+    <img src="kopie_A4.png" alt="Tabelle 1">
+    <img src="kopie_A4_3.png" alt="Tabelle 2">
+</div>
+
+</body>
+</html>
