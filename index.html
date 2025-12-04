@@ -98,42 +98,50 @@ farben.forEach(f=>{
   });html+="</table></div>";
 });
 document.getElementById("shop").innerHTML=html;
-
+<script>
 function absenden(){
-let webhook = "https://script.google.com/macros/s/AKfycbwTcy2uCBJuxWfzOoFFgIf7i8F4PXNY2U6MIHXBCtYTul7r0L9_hTzmO08AxJ-qJmbT/exec";
-    let name=document.getElementById("name").value.trim();
-   let email=document.getElementById("email").value.trim();
-   if(!name||!email)return alert("Name & E-Mail erforderlich.");
 
-   let bestellung=[];
+   let name   = document.getElementById('name').value.trim();
+   let email  = document.getElementById('email').value.trim();
+   let stand  = document.getElementById('standort').value;
+   let chef   = document.getElementById('chef').value;
+
+   if(!name || !email){
+        alert("Bitte Name & E-Mail eingeben.");
+        return;
+   }
+
+   let bestellung = [];
    document.querySelectorAll("input[type=number]").forEach(el=>{
-     if(el.value>0)bestellung.push(`${el.name}: ${el.value}`);
+        if(el.value > 0){
+            bestellung.push(`${el.name}: ${el.value}`);
+        }
    });
-   if(!bestellung.length)return alert("Keine Artikel ausgewählt.");
-   // 🔹 Bestellung an Google Sheets senden
-   fetch(webhook,{
-     method:"POST",
-     headers:{"Content-Type":"application/json"},
-     body:JSON.stringify({
-         name:name,
-         email:email,
-         standort:stand,
-         chef:chef,
-         bestellung:bestellung
-     })
-   })
-   .then(r => console.log("✔ An Sheets gesendet"))
-   .catch(e => console.error("Fehler beim senden:", e));
 
-   let empfaenger="marketing@dinnebiergruppe.de";
-   let stand=document.getElementById("standort").value;
-   let chef=document.getElementById("chef").value;
+   if(bestellung.length === 0){
+        alert("Keine Artikel ausgewählt.");
+        return;
+   }
 
-   let text=`Neue Bestellung:\n\nName: ${name}\nE-Mail: ${email}\nStandort: ${stand}\nVorgesetzter: ${chef}\n\n${bestellung.join("\n")}`;
+   let empfaenger = "marketing@dinnebiergruppe.de"; // intern
+   let text =
+`Neue Bestellung:
 
-window.location.href=`mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+Name: ${name}
+E-Mail: ${email}
+Standort: ${stand}
+Vorgesetzter: ${chef}
+
+Bestellung:
+${bestellung.join("\n")}`;
+
+    // 2 Empfänger: intern + Besteller
+    window.location.href = `mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+
+    alert("✔ Bestellung wird per E-Mail geöffnet.\nBitte prüfen & auf SENDEN klicken.");
 }
 </script>
+
 
 <button onclick="absenden()">🛒 Bestellung absenden</button>
 
