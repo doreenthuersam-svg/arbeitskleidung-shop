@@ -108,24 +108,24 @@ function absenden(){
    let stand  = document.getElementById('standort').value;
    let chef   = document.getElementById('chef').value;
 
-   if(!name || !email){
+   if (!name || !email) {
         alert("Bitte Name & E-Mail eingeben.");
         return;
    }
 
    let bestellung = [];
-   document.querySelectorAll("input[type=number]").forEach(el=>{
-        if(parseInt(el.value) > 0){
+   document.querySelectorAll("input[type=number]").forEach(el => {
+        if (parseInt(el.value) > 0) {
             bestellung.push(`${el.name}: ${el.value}`);
         }
    });
 
-   if(bestellung.length === 0){
+   if (bestellung.length === 0) {
         alert("Keine Artikel ausgewählt.");
         return;
    }
 
-   let empfaenger = "marketing@dinnebiergruppe.de"; // intern
+   let empfaenger = "marketing@dinnebiergruppe.de";
 
    let text =
 `Neue Bestellung:
@@ -138,24 +138,14 @@ Vorgesetzter: ${chef}
 Bestellung:
 ${bestellung.join("\n")}`;
 
-   // Öffnet Outlook — 2 Empfänger: intern + Besteller
-    // 🟢 Webhook an Spreadsheet senden
-fetch("https://script.google.com/macros/library/d/1GYTSkOsbmlCFJTMwaXZtOd_Rq2TjJf4pi28tH8CbqgaXD46fBPfop5dA/5",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-      name:name,
-      email:email,
-      standort:stand,
-      chef:chef,
-      bestellung:bestellung
-   })
-});
+   // E-Mail an Marketing + Mitarbeiter (CC)
+   let mailtoLink = "mailto:" + empfaenger + ";" + email +
+                    "?subject=" + encodeURIComponent("Bekleidungsbestellung") +
+                    "&body=" + encodeURIComponent(text);
 
-   window.location.href =
-       `mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+   window.location.href = mailtoLink;
 
-   alert("✔ Bestellung wurde vorbereitet. Bitte im E-Mail Fenster auf SENDEN klicken.");
+   alert("✔ E-Mail wurde vorbereitet – bitte in Outlook prüfen & auf SENDEN klicken.");
 }
 </script>
 
