@@ -100,7 +100,8 @@ farben.forEach(f=>{
 document.getElementById("shop").innerHTML=html;
 
 function absenden(){
-   let name=document.getElementById("name").value.trim();
+let webhook = "https://script.google.com/macros/s/AKfycbwTcy2uCBJuxWfzOoFFgIf7i8F4PXNY2U6MIHXBCtYTul7r0L9_hTzmO08AxJ-qJmbT/exec";
+    let name=document.getElementById("name").value.trim();
    let email=document.getElementById("email").value.trim();
    if(!name||!email)return alert("Name & E-Mail erforderlich.");
 
@@ -109,6 +110,20 @@ function absenden(){
      if(el.value>0)bestellung.push(`${el.name}: ${el.value}`);
    });
    if(!bestellung.length)return alert("Keine Artikel ausgewählt.");
+   // 🔹 Bestellung an Google Sheets senden
+   fetch(webhook,{
+     method:"POST",
+     headers:{"Content-Type":"application/json"},
+     body:JSON.stringify({
+         name:name,
+         email:email,
+         standort:stand,
+         chef:chef,
+         bestellung:bestellung
+     })
+   })
+   .then(r => console.log("✔ An Sheets gesendet"))
+   .catch(e => console.error("Fehler beim senden:", e));
 
    let empfaenger="marketing@dinnebiergruppe.de";
    let stand=document.getElementById("standort").value;
