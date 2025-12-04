@@ -131,7 +131,7 @@ let webhook = "https://script.google.com/macros/s/AKfycbwTcy2uCBJuxWfzOoFFgIf7i8
 
    let text=`Neue Bestellung:\n\nName: ${name}\nE-Mail: ${email}\nStandort: ${stand}\nVorgesetzter: ${chef}\n\n${bestellung.join("\n")}`;
 
-   window.location.href=`mailto:${empfaenger},${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+window.location.href=`mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
 }
 </script>
 
