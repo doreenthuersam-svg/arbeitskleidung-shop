@@ -1,59 +1,47 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-   </div>
-
 <meta charset="UTF-8">
 <title>Interner Bekleidungs-Shop</title>
 
 <style>
-    body{
-        font-family: Arial, sans-serif;
-        margin: 40px auto;
-        max-width: 1200px;
-        line-height: 1.6;
-    }
-    h1{text-align:center; margin-bottom:10px;}
-    .sub{ text-align:center; margin-bottom:30px; color:#444; }
+    body{font-family:Arial, sans-serif;margin:0;padding:40px;text-align:center;}
+    h1{margin-top:20px;}
+    .sub{margin-bottom:35px;color:#444;}
 
-    table{ width:100%; border-collapse:collapse; margin-bottom:35px;}
+    table{width:100%;max-width:1200px;margin:0 auto 35px;border-collapse:collapse;}
     th,td{border:1px solid #ccc;padding:7px;text-align:center;}
-    th{background:#f2f2f2;font-weight:bold;}
+    th{background:#f2f2f2;}
     input[type=number]{width:55px;}
-
     .block{margin-top:40px;}
     button{
-        background:#0073ff;color:#fff;padding:15px 25px;font-size:18px;
-        border:none;border-radius:6px;cursor:pointer;margin-top:15px;
+        background:#0073ff;color:#fff;padding:15px 25px;
+        border:none;border-radius:6px;font-size:18px;cursor:pointer;
     }
     button:hover{background:#005dda;}
 
-    .banner-box{
-        display:flex;gap:30px;justify-content:center;margin-top:40px;
+    .bilderbox{
+        margin-top:50px;
+        display:flex;gap:30px;justify-content:center;flex-wrap:wrap;
     }
-    .banner-box img{
-        width:260px;border:1px solid #ccc;border-radius:6px;
+    .bilderbox img{
+        width:300px;border:1px solid #ccc;border-radius:6px;
     }
 </style>
 </head>
-<div style="text-align:center;margin-bottom:30px;">
-    <img src="Dinnebiergruppe_schwarz.png" alt="Logo" style="height:90px;">
-</div>
+<body>
 
-    <body>
+<!-- LOGO -->
+<img src="Dinnebiergruppe_schwarz.png" alt="Logo" style="height:90px;margin-bottom:25px;">
 
 <h1>Interner Bekleidungs-Shop</h1>
 <p class="sub">Mitarbeiter können hier Arbeitskleidung auswählen & bestellen.<br>
-Je Größe bitte Menge eintragen (0 = keine Bestellung).</p>
+Bitte pro Größe Menge eintragen (0 = keine Bestellung).</p>
 
-<!-- 🔻 Bilderbereich oben (Logo) -->
-<div style="text-align:center;margin-bottom:30px;">
-    <img src="logo_schwarz.png" style="height:90px;">
-</div>
+<!-- FORMULAR --------------------------------------------------------- -->
 
 <script>
-// Standorte
-const standorte = [
+const standorte=[
  "Berlin - Großbeerenstr.","Berlin - Holzhauser Ford","Berlin - Holzhauser Opel",
  "Berlin – Kurfürstendamm","Berlin - Lichtenberg","Berlin - Marzahn","Berlin - Nordring",
  "Berlin - Pankow","Berlin - Spandau","Berlin - Wilmersdorf",
@@ -62,13 +50,11 @@ const standorte = [
  "Potsdam","Pritzwalk","Wittenberge","Wittstock","Zehdenick"
 ];
 
-// Vorgesetzte
 const chefs=[
  "Herr U. Dinnebier","Herr M. Dinnebier","Herr Engelmann",
  "Herr Müller","Herr Pilniok","Herr Schoke","Herr Wünsch"
 ];
 
-// Artikel + Größen
 const artikel=[
 "T-Shirt","Hemd Kurzarm","Hemd Langarm","Polo Langarm","Polo Kurzarm","Hoodie",
 "Langarmshirt","Softshelljacke","Winterjacke","Fleecejacke",
@@ -79,92 +65,70 @@ const groessen=["XS","S","M","L","XL","XXL","3XL","4XL"];
 const farben=["Schwarz","Weiß"];
 </script>
 
-<h3>Mitarbeiterdaten</h3>
-<label>Name: <input type="text" id="name" required></label><br><br>
-<label>E-Mail: <input type="email" id="email" required></label><br><br>
+<h2 style="text-align:left;max-width:1200px;margin:30px auto 10px;">Mitarbeiterdaten</h2>
 
-<label>Standort:
-<select id="standort">
-<script>standorte.forEach(s=>document.write(`<option>${s}</option>`));</script>
-</select>
-</label><br><br>
+<div style="max-width:1200px;margin:auto;text-align:left;font-size:18px;">
+    Name:<br><input type="text" id="name" style="width:350px;font-size:18px;"><br><br>
+    E-Mail:<br><input type="email" id="email" style="width:350px;font-size:18px;"><br><br>
 
-<label>Vorgesetzter:
-<select id="chef">
-<script>chefs.forEach(c=>document.write(`<option>${c}</option>`));</script>
-</select>
-</label><br><br>
+    Standort:<br>
+    <select id="standort" style="width:350px;font-size:18px;">
+    <script>standorte.forEach(s=>document.write(`<option>${s}</option>`));</script>
+    </select><br><br>
 
-<hr><br>
+    Vorgesetzter:<br>
+    <select id="chef" style="width:350px;font-size:18px;">
+    <script>chefs.forEach(c=>document.write(`<option>${c}</option>`));</script>
+    </select><br><br>
+</div>
+
+<hr style="margin:40px auto;width:1200px;">
+
 <div id="shop"></div>
 
 <script>
-// Tabellen generieren
 let html="";
-farben.forEach(farbe=>{
-  html+=`<div class="block"><h2>${farbe}</h2><table><tr><th>Artikel</th>`;
-  groessen.forEach(g=>html+=`<th>${g}</th>`); html+="</tr>";
-
+farben.forEach(f=>{
+  html+=`<div class="block"><h2>${f}</h2><table><tr><th>Artikel</th>`;
+  groessen.forEach(g=>html+=`<th>${g}</th>`);html+="</tr>";
   artikel.forEach(a=>{
     html+=`<tr><td>${a}</td>`;
-    groessen.forEach(g=>{
-      html+=`<td><input type="number" min="0" value="0" name="${farbe}_${a}_${g}"></td>`;
-    });
+    groessen.forEach(g=>html+=`<td><input type='number' min='0' value='0' name='${f}_${a}_${g}'></td>`);
     html+="</tr>";
-  });
-
-  html+="</table></div>";
+  });html+="</table></div>";
 });
 document.getElementById("shop").innerHTML=html;
+
+function absenden(){
+   let name=document.getElementById("name").value.trim();
+   let email=document.getElementById("email").value.trim();
+   if(!name||!email)return alert("Name & E-Mail erforderlich.");
+
+   let bestellung=[];
+   document.querySelectorAll("input[type=number]").forEach(el=>{
+     if(el.value>0)bestellung.push(`${el.name}: ${el.value}`);
+   });
+   if(!bestellung.length)return alert("Keine Artikel ausgewählt.");
+
+   let empfaenger="marketing@dinnebiergruppe.de";
+   let stand=document.getElementById("standort").value;
+   let chef=document.getElementById("chef").value;
+
+   let text=`Neue Bestellung:\n\nName: ${name}\nE-Mail: ${email}\nStandort: ${stand}\nVorgesetzter: ${chef}\n\n${bestellung.join("\n")}`;
+
+   window.location.href=`mailto:${empfaenger},${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+}
 </script>
 
 <button onclick="absenden()">🛒 Bestellung absenden</button>
 
-<script>
-function absenden(){
-   let name=document.getElementById("name").value.trim();
-   let email=document.getElementById("email").value.trim();
-   if(!name||!email) return alert("Bitte Name & E-Mail eingeben!");
+<!-- BILDER UNTEN ------------------------------------------------------ -->
 
-   let stand=document.getElementById("standort").value;
-   let chef=document.getElementById("chef").value;
-
-   let bestell=[];
-   document.querySelectorAll("input[type=number]").forEach(el=>{
-      if(el.value>0) bestell.push(`${el.name}: ${el.value}`);
-   });
-   if(bestell.length===0) return alert("Keine Artikel ausgewählt!");
-
-   let empfaenger="marketing@dinnebiergruppe.de";
-
-   let text=
-`Neue Bekleidungsbestellung:
-
-Name: ${name}
-E-Mail: ${email}
-Standort: ${stand}
-Vorgesetzter: ${chef}
-
-Bestellung:
-${bestell.join("\n")}
-`;
-
-   // Mail an dich UND an Besteller
-   window.location.href=
-     `mailto:${empfaenger},${email}?subject=Bekleidungsbestellung%20${encodeURIComponent(name)}&body=${encodeURIComponent(text)}`;
-
-   alert("✔ Bestellung erstellt – Outlook öffnet sich.");
-}
-</script>
-
-<br><hr><br>
-
-<!-- 🔻 Bilder unter dem Button -->
-<h3 style="text-align:center;"</h3>
-<div class="banner-box">
-    <img src="Seite1.jpg">
-    <img src="Seite2.jpg">
+<div class="bilderbox">
+    <img src="Seite1.jpg" alt="Bild 1">
+    <img src="Seite2.jpg" alt="Bild 2">
 </div>
 
+<br><br>
 </body>
 </html>
