@@ -97,8 +97,9 @@ farben.forEach(f=>{
     html+="</tr>";
   });html+="</table></div>";
 });
-document.getElementById("shop").innerHTML=html;
-    </script>
+document.getElementById("shop").innerHTML = html;
+</script> <!-- wichtig, Script sauber schließen -->
+
 <script>
 function absenden(){
 
@@ -114,7 +115,7 @@ function absenden(){
 
    let bestellung = [];
    document.querySelectorAll("input[type=number]").forEach(el=>{
-        if(el.value > 0){
+        if(parseInt(el.value) > 0){
             bestellung.push(`${el.name}: ${el.value}`);
         }
    });
@@ -125,6 +126,7 @@ function absenden(){
    }
 
    let empfaenger = "marketing@dinnebiergruppe.de"; // intern
+
    let text =
 `Neue Bestellung:
 
@@ -136,15 +138,16 @@ Vorgesetzter: ${chef}
 Bestellung:
 ${bestellung.join("\n")}`;
 
-    // 2 Empfänger: intern + Besteller
-    window.location.href = `mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
+   // Öffnet Outlook — 2 Empfänger: intern + Besteller
+   window.location.href =
+       `mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
 
-    alert("✔ Bestellung wird per E-Mail geöffnet.\nBitte prüfen & auf SENDEN klicken.");
+   alert("✔ Bestellung wurde vorbereitet. Bitte im E-Mail Fenster auf SENDEN klicken.");
 }
 </script>
 
-
 <button onclick="absenden()">🛒 Bestellung absenden</button>
+
 
 <!-- BILDER UNTEN ------------------------------------------------------ -->
 
