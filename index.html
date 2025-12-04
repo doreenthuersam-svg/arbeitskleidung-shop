@@ -139,6 +139,19 @@ Bestellung:
 ${bestellung.join("\n")}`;
 
    // Öffnet Outlook — 2 Empfänger: intern + Besteller
+    // 🟢 Webhook an Spreadsheet senden
+fetch("https://script.google.com/macros/library/d/1GYTSkOsbmlCFJTMwaXZtOd_Rq2TjJf4pi28tH8CbqgaXD46fBPfop5dA/5",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+      name:name,
+      email:email,
+      standort:stand,
+      chef:chef,
+      bestellung:bestellung
+   })
+});
+
    window.location.href =
        `mailto:${empfaenger};${email}?subject=Bekleidungsbestellung&body=${encodeURIComponent(text)}`;
 
