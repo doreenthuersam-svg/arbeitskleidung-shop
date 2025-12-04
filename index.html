@@ -127,19 +127,20 @@ function absenden(){
 
    let empfaenger = "marketing@dinnebiergruppe.de";
 
-let bestellText = bestellung.map(item => {
-    // item hat aktuell Format: "Schwarz_T-Shirt_L: 2"
-    let parts = item.split("_");
-    let farbe = parts[0];
-    let artikel = parts[1];
-    let groesseMenge = parts[2].split(":");
-    let groesse = groesseMenge[0];
-    let menge = groesseMenge[1].trim();
+   // hübsch formatierter Bestelltext
+   let bestellText = bestellung.map(item => {
+        // item Format: Schwarz_T-Shirt_L: 2
+        let parts = item.split("_");
+        let farbe = parts[0];
+        let artikel = parts[1];
+        let groesseMenge = parts[2].split(":");
+        let groesse = groesseMenge[0];
+        let menge = groesseMenge[1].trim();
 
-    return `• ${farbe} – ${artikel} – Größe ${groesse} × ${menge}`;
-}).join("\n");
+        return `• ${farbe} – ${artikel} – Größe ${groesse} × ${menge}`;
+   }).join("\n");
 
-let text =
+   let text =
 `Neue Bekleidungsbestellung
 
 🧍 Mitarbeiter: ${name}
@@ -151,12 +152,7 @@ let text =
 ${bestellText}
 
 --------------------------
-Gesendet über internen Bekleidungsshop
-`;
-
-
-Bestellung:
-${bestellung.join("\n")}`;
+Gesendet über internen Bekleidungsshop`;
 
    // E-Mail an Marketing + Mitarbeiter (CC)
    let mailtoLink = "mailto:" + empfaenger + ";" + email +
@@ -164,10 +160,10 @@ ${bestellung.join("\n")}`;
                     "&body=" + encodeURIComponent(text);
 
    window.location.href = mailtoLink;
-
    alert("✔ E-Mail wurde vorbereitet – bitte in Outlook prüfen & auf SENDEN klicken.");
 }
 </script>
+
 
 <button onclick="absenden()">🛒 Bestellung absenden</button>
 
