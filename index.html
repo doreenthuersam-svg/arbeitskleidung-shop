@@ -127,13 +127,33 @@ function absenden(){
 
    let empfaenger = "marketing@dinnebiergruppe.de";
 
-   let text =
-`Neue Bestellung:
+let bestellText = bestellung.map(item => {
+    // item hat aktuell Format: "Schwarz_T-Shirt_L: 2"
+    let parts = item.split("_");
+    let farbe = parts[0];
+    let artikel = parts[1];
+    let groesseMenge = parts[2].split(":");
+    let groesse = groesseMenge[0];
+    let menge = groesseMenge[1].trim();
 
-Name: ${name}
-E-Mail: ${email}
-Standort: ${stand}
-Vorgesetzter: ${chef}
+    return `• ${farbe} – ${artikel} – Größe ${groesse} × ${menge}`;
+}).join("\n");
+
+let text =
+`Neue Bekleidungsbestellung
+
+🧍 Mitarbeiter: ${name}
+📩 E-Mail: ${email}
+📍 Standort: ${stand}
+👨‍💼 Vorgesetzter: ${chef}
+
+🛒 Bestellung:
+${bestellText}
+
+--------------------------
+Gesendet über internen Bekleidungsshop
+`;
+
 
 Bestellung:
 ${bestellung.join("\n")}`;
