@@ -201,6 +201,10 @@ if(bemerkung){
 
      +`🛒 Bestellung:%0D%0A`
      +cart.map(c=>`• ${c.menge}× ${c.farbe} – ${c.artikel} (${c.groesse}, Stick: ${c.bestickung})`).join("%0D%0A");
+let bemerkung = document.getElementById("bemerkung").value.trim();
+if(bemerkung){
+    text += `%0D%0A%0D%0A📝 Bemerkung:%0D%0A${bemerkung}`;
+}
 
  window.location.href=`mailto:marketing@dinnebiergruppe.de;${email}?subject=Bekleidungsbestellung&body=${text}`;
  alert("E-Mail wird geöffnet – bitte prüfen & senden.");
