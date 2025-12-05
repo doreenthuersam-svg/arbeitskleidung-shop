@@ -213,10 +213,19 @@ function sendOrder(){
     <h2 style="margin-bottom:20px;">Produktübersicht / Infoblätter</h2>
 
     <div style="display:flex;flex-wrap:wrap;gap:25px;justify-content:center;">
-        <img src="Seite1.jpg" style="width:400px;border-radius:6px;border:1px solid #ccc;">
-        <img src="Seite2.jpg" style="width:400px;border-radius:6px;border:1px solid #ccc;">
+        
+        <!-- Bild klickbar öffnen -->
+        <a href="Seite1.jpg" target="_blank">
+            <img src="Seite1.jpg" style="width:100%;max-width:400px;border-radius:6px;border:1px solid #ccc;cursor:pointer;">
+        </a>
+
+        <a href="Seite2.jpg" target="_blank">
+            <img src="Seite2.jpg" style="width:100%;max-width:400px;border-radius:6px;border:1px solid #ccc;cursor:pointer;">
+        </a>
+
     </div>
 </div>
+
 
 </body>
 </html>
