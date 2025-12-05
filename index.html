@@ -178,6 +178,7 @@ function renderCart(){
 
 
 /* Bestellung senden */
+<script>
 function sendOrder(){
 
  if(cart.length==0) return alert("Warenkorb ist leer!");
@@ -186,6 +187,7 @@ function sendOrder(){
  let email=document.getElementById("email").value.trim();
  let stand=document.getElementById("standort").value;
  let chef=document.getElementById("chef").value;
+ let bemerkung=document.getElementById("bemerkung").value.trim();
 
  if(!name||!email) return alert("Name & E-Mail erforderlich");
 
@@ -194,22 +196,18 @@ function sendOrder(){
      +`E-Mail: ${email}%0D%0A`
      +`Standort: ${stand}%0D%0A`
      +`Vorgesetzter: ${chef}%0D%0A%0D%0A`
-     let bemerkung = document.getElementById("bemerkung").value.trim();
-if(bemerkung){
-    text += `%0D%0A%0D%0A📝 Bemerkung:%0D%0A${bemerkung}`;
-}
-
      +`🛒 Bestellung:%0D%0A`
      +cart.map(c=>`• ${c.menge}× ${c.farbe} – ${c.artikel} (${c.groesse}, Stick: ${c.bestickung})`).join("%0D%0A");
-let bemerkung = document.getElementById("bemerkung").value.trim();
-if(bemerkung){
-    text += `%0D%0A%0D%0A📝 Bemerkung:%0D%0A${bemerkung}`;
-}
+
+ if(bemerkung.length>0){
+     text += `%0D%0A%0D%0A📝 Bemerkung:%0D%0A${bemerkung}`;
+ }
 
  window.location.href=`mailto:marketing@dinnebiergruppe.de;${email}?subject=Bekleidungsbestellung&body=${text}`;
  alert("E-Mail wird geöffnet – bitte prüfen & senden.");
 }
 </script>
+
 
 </body>
 </html>
